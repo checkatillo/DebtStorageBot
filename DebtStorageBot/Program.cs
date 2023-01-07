@@ -1,3 +1,7 @@
+using DebtStorageBot;
+using DebtStorageBot.DB;
+using DebtStorageBot.DB.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,16 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Host.ConfigureAppConfiguration(
+    (hostingContext, configuration) => configuration.AddEnvironmentVariables()
+    );
+
+builder.Services.AddSingleton<DebtStorageSettings>(builder.Configuration.GetSection("DebtStorageSettings").Get<DebtStorageSettings>());
+
+builder.Services.AddDbContext<DebtStorageContext>();
+
+builder.Services.AddTransient(typeof(DebtsService));
 
 var app = builder.Build();
 

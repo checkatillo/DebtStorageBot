@@ -22,6 +22,9 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        "DebtStorageSettings__BotAPIKey": "another API key"
+      },
       "publishAllPorts": true
     }
   },

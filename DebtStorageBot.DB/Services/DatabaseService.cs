@@ -17,13 +17,15 @@ namespace DebtStorageBot.DB.Services
             if (transactionToClose)
                 transaction = context.Database.BeginTransaction();
 
-            action(transaction);
+            T ret = action(transaction);
 
             if (transactionToClose)
             {
                 transaction.Commit();
                 transaction.Dispose();
             }
+
+            return ret;
         }
     }
 }
